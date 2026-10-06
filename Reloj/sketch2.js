@@ -8,6 +8,7 @@ let vectores = [];
 let returnVectores = [];
 let font;
 
+
 async function setup() {
   // Cargar la imagen y esperar a que termine
   sol = await loadImage("assets/sol.png");
@@ -20,7 +21,17 @@ async function setup() {
   textAlign(CENTER, CENTER);
  
   imageMode(CENTER);
-  vectores.push(new Vector(50, 500, 25, 255));
+/*
+  let  vecX=50;
+  let opo = 255;
+  for (let i = 0; i < vectores.length; i++) {
+    vectores[i] = new Vector(vecX, 500, 25, opo);
+    vecX -= 10;
+    opo -=50;
+}
+  */
+
+vectores.push(new Vector(50, 500, 25, 255));
 vectores.push(new Vector(40, 500, 25, 200));
 vectores.push(new Vector(30, 500, 25, 150));
 vectores.push(new Vector(20, 500, 25, 100));
@@ -32,8 +43,8 @@ returnVectores.push(new Vector(920, 680, 25, 150));
 returnVectores.push(new Vector(930, 680, 25, 100));
 returnVectores.push(new Vector(940, 680, 25, 50));
 
-  
 }
+
 
 function draw() {
  
@@ -56,7 +67,7 @@ function draw() {
   let posY = centroY + sin(angle) * radio;
   
   //si es por el día o por la noche
-  if (h>=18 || h<=6){
+  if (h<=18 || h>=6){
     dia = false;
   } else {
     dia = true;
@@ -74,8 +85,8 @@ function draw() {
     tint(255, 255);
     image(luna, posX, posY);
   }
-
   
+
   //Mostrar hora 
   if (dia){
     fill(0);  
@@ -103,6 +114,8 @@ function draw() {
   }
   }
 
+
+
   textFont(font);
   textAlign(CENTER, CENTER);
   textSize(92);
@@ -116,7 +129,6 @@ function draw() {
   // Velocidad 
   angle += 0.015;
 }
-
 class Vector {
 
  constructor(pPosX, pPosY, d, opacidad){
@@ -148,4 +160,3 @@ class Vector {
     this.posX -= 2;
   }
 }
-  

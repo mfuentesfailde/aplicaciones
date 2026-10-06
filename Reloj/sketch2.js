@@ -13,6 +13,7 @@ async function setup() {
   sol = await loadImage("assets/sol.png");
   luna = await loadImage("assets/luna.png");
   logo = await loadImage("assets/logo.png");
+  font = await loadFont('assets/Dax.ttf');
 
   createCanvas(1000, 800);
 

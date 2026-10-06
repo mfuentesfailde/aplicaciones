@@ -5,6 +5,9 @@ let logo;
 let dia;
 let opacidad=0;
 let vectores = [];
+let returnVectores = [];
+let font;
+
 async function setup() {
   // Cargar la imagen y esperar a que termine
   sol = await loadImage("assets/sol.png");
@@ -21,6 +24,13 @@ vectores.push(new Vector(40, 500, 25, 200));
 vectores.push(new Vector(30, 500, 25, 150));
 vectores.push(new Vector(20, 500, 25, 100));
 vectores.push(new Vector(10, 500, 25, 50));
+
+returnVectores.push(new Vector(900, 680, 25, 255));
+returnVectores.push(new Vector(910, 680, 25, 200));
+returnVectores.push(new Vector(920, 680, 25, 150));
+returnVectores.push(new Vector(930, 680, 25, 100));
+returnVectores.push(new Vector(940, 680, 25, 50));
+
   
 }
 
@@ -63,10 +73,14 @@ function draw() {
     tint(255, 255);
     image(luna, posX, posY);
   }
-  
 
+  
   //Mostrar hora 
-  fill(0);
+  if (dia){
+    fill(0);  
+  } else{
+    fill(255);
+  }
   textSize(48);
   text(tiempoActual, centroX, centroY);
   textSize(32);
@@ -77,14 +91,31 @@ function draw() {
   tint(255, opacidad);
   image(logo, 200, height/2-100);
 
-  fill(0)
- for (let v of vectores) {
-  v.move();
-}
-  
+
+  if(s<30){
+  for (let v of vectores) {
+      v.move();
+  }
+  }else{
+  for(vec of returnVectores){
+    vec.return();
+  }
+  }
+
+  textFont(font);
+  textAlign(CENTER, CENTER);
+  textSize(92);
+
+  if (dia){
+    fill(0);  
+  } else{
+    fill(255);
+  }
+  text("Concello de Lugo", 450, 580);  
   // Velocidad 
   angle += 0.015;
 }
+
 class Vector {
 
  constructor(pPosX, pPosY, d, opacidad){
@@ -93,14 +124,27 @@ class Vector {
     this.d = d;
     this.opacidad = opacidad
   }
-/*
-display(){
-  circle(this.posX, this.posY, this.d);
-}*/
+
   move() {
-    fill(255, this.opacidad);
+    if (dia){
+    fill(0, this.opacidad);  
+    } else{
+      fill(255, this.opacidad);
+    }
     noStroke();
     circle(this.posX, this.posY, this.d);
-    this.posX += 3;
+    this.posX += 2;
+  }
+
+  return(){
+   if (dia){
+    fill(0, this.opacidad);  
+    } else{
+      fill(255, this.opacidad);
+    }
+    noStroke();
+    circle(this.posX, this.posY, this.d);
+    this.posX -= 2;
   }
 }
+  

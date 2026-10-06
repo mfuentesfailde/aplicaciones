@@ -67,7 +67,7 @@ function draw() {
   let posY = centroY + sin(angle) * radio;
   
   //si es por el día o por la noche
-  if (h<=18 || h>=6){
+  if (h>=18 || h<=6){
     dia = false;
   } else {
     dia = true;

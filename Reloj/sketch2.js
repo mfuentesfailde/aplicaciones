@@ -113,7 +113,14 @@ if (h >= 6 && h <= 18) {
     vec.vuelta();
   }
   }
+for(let i=0; i<m; i++){
+  console.log("en el for");
+  let x = random(0, 900);
+  let color = random(0, 255);
+  let punto = new vector(x,70,15,color);
+  punto.circMinutos();
 
+}
 
 
   textFont(font);

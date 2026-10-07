@@ -51,7 +51,7 @@ let x;
   let color;
   for (let i=0; i<m; i++)  {
  x = random(0, 900);
-
+console.log(x);
     color = random(0, 255);
  p = new Vector(x,70,8,color);
     puntitos.push(p);

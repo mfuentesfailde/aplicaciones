@@ -7,7 +7,7 @@ let opacidad=0;
 let vectores = [];
 let returnVectores = [];
 let font;
-let punto;
+let p;
 
 async function setup() {
   // Cargar la imagen y esperar a que termine
@@ -44,7 +44,7 @@ returnVectores.push(new Vector(930, 680, 25, 100));
 returnVectores.push(new Vector(940, 680, 25, 50));
   let x = random(0, 900);
   let color = random(0, 255);
- punto = new Vector(x,70,8,color);
+ p = new Vector(x,70,8,color);
 }
 
 
@@ -123,9 +123,9 @@ if (h >= 6 && h <= 18) {
   punto.circMinutos();
 
 }*/
+p.circMinutos();
 
-  punto.circMinutos();
-
+  
 
   textFont(font);
   textAlign(CENTER, CENTER);

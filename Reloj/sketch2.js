@@ -110,7 +110,7 @@ if (h >= 6 && h <= 18) {
   }
   }else{
   for(vec of returnVectores){
-    vec.return();
+    vec.vuelta();
   }
   }
 
@@ -149,7 +149,7 @@ class Vector {
     this.posX += 2;
   }
 
-  return(){
+  vuelta(){
    if (dia){
     fill(0, this.opacidad);  
     } else{
@@ -159,4 +159,13 @@ class Vector {
     circle(this.posX, this.posY, this.d);
     this.posX -= 2;
   }
-}
+
+  circMinutos(){
+    fill(this.opacidad);  
+    noStroke();
+    circle(this.posX, this.posY, this.d);
+    this.posY -= 2;
+  }
+
+
+  }

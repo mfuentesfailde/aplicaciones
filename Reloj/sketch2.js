@@ -123,7 +123,7 @@ if (h >= 6 && h <= 18) {
 }*/
   let x = random(0, 900);
   let color = random(0, 255);
-  let punto = new Vector(x,70,15,color);
+  let punto = new Vector(x,70,8,color);
   punto.circMinutos();
 
 
@@ -175,7 +175,7 @@ class Vector {
     fill(this.opacidad);  
     noStroke();
     circle(this.posX, this.posY, this.d);
-    this.posY -= 2;
+    this.posY++;
   }
 
 

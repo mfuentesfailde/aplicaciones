@@ -1,14 +1,23 @@
-let h,m,s;
+/**********************************************************************************+**/
+/*Aplicación psra poner en una fachada */
+/***En función de las horas cambia el color de fondo y el sol y la luna que dan vueltas alrededor del sol dependiendo si es de día o de noche.
+Y en función de los segundos se visualizan unos circulitos con su estela.
+ */
+/**********************************************************************************+**/
+//Dedinir veriables
 let sol;
 let angle = 0;
 let luna;
 let logo;
 let dia;
 let opacidad=0;
+let font;
+let primeraVuelta;
+//arrays para hacer las estelas
 let vectores = [];
 let returnVectores = [];
-let font;
-let puntitos =[];
+
+
 
 async function setup() {
   // Cargar la imagen y esperar a que termine
@@ -22,7 +31,9 @@ async function setup() {
   textAlign(CENTER, CENTER);
  
   imageMode(CENTER);
-/*
+
+
+  /*
   let  vecX=50;
   let opo = 255;
   for (let i = 0; i < vectores.length; i++) {
@@ -32,6 +43,8 @@ async function setup() {
 }
   */
 
+
+//Intenté cargar los vextores con un bucle for pero no ibs y lo hice a mano 
 vectores.push(new Vector(50, 500, 25, 255));
 vectores.push(new Vector(40, 500, 25, 200));
 vectores.push(new Vector(30, 500, 25, 150));
@@ -43,27 +56,16 @@ returnVectores.push(new Vector(910, 680, 25, 200));
 returnVectores.push(new Vector(920, 680, 25, 150));
 returnVectores.push(new Vector(930, 680, 25, 100));
 returnVectores.push(new Vector(940, 680, 25, 50));
-      // Define la hora actual para   
-
-   m = nf(minute(), 2);
-
-    let x;
-    let opaco;
-    for (let i=0; i<m; i++)  {
-    x = round(random(0, 900));
-    opaco=round(random(0, 255));
-    
-    p = new Vector(x,70,8,opaco);
-    puntitos.push(p);
 }
 
-}
+
 function draw() {
  
 
- h = nf(hour(), 2);
-   m = nf(minute(), 2);
-   s = nf(second(), 2);
+    // Define la hora actual  
+  let h = nf(hour(), 2);
+  let m = nf(minute(), 2);
+  let s = nf(second(), 2);
 
   let tiempoActual = `${h}:${m}`;
   let seg=`:${s}`;
@@ -79,7 +81,7 @@ function draw() {
   
   //si es por el día o por la noche
 if (h >= 6 && h <= 18) {
-  dia = true;
+    dia = true;
   } else {
     dia = false;
    ;
@@ -121,13 +123,12 @@ if (h >= 6 && h <= 18) {
   }
   }else{
   for(vec of returnVectores){
-    vec.vuelta();
+    vec.return();
   }
   }
+fill(255);
 
-    for (let p of puntitos) {
-      p.circMinutos();
-  }
+
 
   textFont(font);
   textAlign(CENTER, CENTER);
@@ -162,7 +163,7 @@ class Vector {
     this.posX += 2;
   }
 
-  vuelta(){
+  return(){
    if (dia){
     fill(0, this.opacidad);  
     } else{
@@ -172,13 +173,4 @@ class Vector {
     circle(this.posX, this.posY, this.d);
     this.posX -= 2;
   }
-
-  circMinutos(){
-    fill(119, 184, 214);  
-    noStroke();
-    circle(this.posX, this.posY, this.d);
-    this.posY++;
-  }
-
-
-  }
+}

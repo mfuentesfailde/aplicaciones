@@ -42,7 +42,9 @@ returnVectores.push(new Vector(910, 680, 25, 200));
 returnVectores.push(new Vector(920, 680, 25, 150));
 returnVectores.push(new Vector(930, 680, 25, 100));
 returnVectores.push(new Vector(940, 680, 25, 50));
-
+  let x = random(0, 900);
+  let color = random(0, 255);
+  let punto = new Vector(x,70,8,color);
 }
 
 
@@ -121,9 +123,7 @@ if (h >= 6 && h <= 18) {
   punto.circMinutos();
 
 }*/
-  let x = random(0, 900);
-  let color = random(0, 255);
-  let punto = new Vector(x,70,8,color);
+
   punto.circMinutos();
 
 

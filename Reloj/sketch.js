@@ -138,7 +138,10 @@ if (h >= 6 && h <= 18) {
   } else{
     fill(255);
   }
-  text("Concello de Lugo", 450, 580);  
+  text("Concello de Lugo", 450, 580);
+  textSize(12);
+    text("TimeLugo by Mariaff", 950, 750);  
+
   // Velocidad 
   angle += 0.015;
 }

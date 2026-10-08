@@ -180,10 +180,10 @@ class Vector {
     fill(119, 184, 214);  
     noStroke();  strokeWeight(3);
     noFill();
-
-  line(this.posX, this.posY, 70, 100);
-  line(this.posX, this.posY, 130, 100);
-  arc(this.posX, 100, 60, 30, 0, PI);
+    circle(this.posX, this.posY, this.d);
+  //line(this.posX, this.posY, 70, 100);
+//  line(this.posX, this.posY, 130, 100);
+  //arc(this.posX, 100, 60, 30, 0, PI);
     this.posY++;
   }
 

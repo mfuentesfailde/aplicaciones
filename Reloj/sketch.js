@@ -2,92 +2,72 @@ let h,m,s;
 let sol;
 let angle = 0;
 let luna;
-let logo;
 let dia;
 let opacidad=0;
 let vectores = [];
 let returnVectores = [];
 let font;
 let puntitos =[];
+let centroX;
+let centroY;
+let radio;
 
 async function setup() {
   // Cargar la imagen y esperar a que termine
   sol = await loadImage("assets/sol.png");
   luna = await loadImage("assets/luna.png");
-  logo = await loadImage("assets/logo.png");
   font = await loadFont('assets/Dax.ttf');
 
-  createCanvas(1000, 800);
+  createCanvas(600, 600);
 
   textAlign(CENTER, CENTER);
  
   imageMode(CENTER);
-/*
-  let  vecX=50;
-  let opo = 255;
-  for (let i = 0; i < vectores.length; i++) {
-    vectores[i] = new Vector(vecX, 500, 25, opo);
-    vecX -= 10;
-    opo -=50;
-}
-  */
 
-vectores.push(new Vector(50, 500, 25, 255));
-vectores.push(new Vector(40, 500, 25, 200));
-vectores.push(new Vector(30, 500, 25, 150));
-vectores.push(new Vector(20, 500, 25, 100));
-vectores.push(new Vector(10, 500, 25, 50));
+vectores.push(new Vector(50, 80, 25, 255));
+vectores.push(new Vector(40, 80, 25, 200));
+vectores.push(new Vector(30, 80, 25, 150));
+vectores.push(new Vector(20, 80, 25, 100));
+vectores.push(new Vector(10, 80, 25, 50));
 
-returnVectores.push(new Vector(900, 680, 25, 255));
-returnVectores.push(new Vector(910, 680, 25, 200));
-returnVectores.push(new Vector(920, 680, 25, 150));
-returnVectores.push(new Vector(930, 680, 25, 100));
-returnVectores.push(new Vector(940, 680, 25, 50));
-      // Define la hora actual para   
-
-   m = nf(minute(), 2);
-
-    let x;
-    let opaco;
-    for (let i=0; i<m; i++)  {
-    x = round(random(0, 900));
-    opaco=round(random(0, 255));
-    
-    p = new Vector(x,70,8,opaco);
-    puntitos.push(p);
-}
-
-}
-function draw() {
+returnVectores.push(new Vector(900, 500, 25, 255));
+returnVectores.push(new Vector(910, 500, 25, 200));
+returnVectores.push(new Vector(920, 500, 25, 150));
+returnVectores.push(new Vector(930, 500, 25, 100));
+returnVectores.push(new Vector(940, 500, 25, 50));
  
 
- h = nf(hour(), 2);
-   m = nf(minute(), 2);
-   s = nf(second(), 2);
 
-  let tiempoActual = `${h}:${m}`;
-  let seg=`:${s}`;
+}function draw() {
 
-  // Moovimiento de la imagen
-  let centroX = width / 2+100;
-  let centroY = height / 2-100;
-  
-  let radio = 170;
+  // Hora como números
+  h = hour();
+  m = minute();
+  s = second();
+
+  // Hora para mostrar
+  let tiempoActual = `${nf(h, 2)}:${nf(m, 2)}`;
+  let seg = `:${nf(s, 2)}`;
+
+  // Centro
+  centroX = width / 2;
+  centroY = height / 2;
+
+  // Movimiento de la imagen
+ radio = 170;
 
   let posX = centroX + cos(angle) * radio;
   let posY = centroY + sin(angle) * radio;
-  
-  //si es por el día o por la noche
-if (h >= 6 && h <= 18) {
-  dia = true;
+
+  // Día o noche
+  if (h >= 6 && h <= 18) {
+    dia = true;
   } else {
     dia = false;
-   ;
   }
 
-
-  /// IMAGENES
-  if(dia){
+  // FONDO E IMAGEN
+  if (dia) {
     background(255);
     tint(255, 255);
     image(sol, posX, posY);
@@ -96,54 +76,72 @@ if (h >= 6 && h <= 18) {
     tint(255, 255);
     image(luna, posX, posY);
   }
-  
 
-  //Mostrar hora 
-  if (dia){
-    fill(0);  
-  } else{
+  // AQUÍ dibujamos los círculos
+  verPunto();
+
+  // Mostrar hora
+  if (dia) {
+    fill(0);
+  } else {
     fill(255);
-  }
-  textSize(48);
-  text(tiempoActual, centroX, centroY);
-  textSize(32);
-  text(seg, centroX+85, centroY+3);
-  
-  // Hacer aparecer el logo poco a poco
-  opacidad = min(opacidad + 1, 255);
-  tint(255, opacidad);
-  image(logo, 200, height/2-100);
-
-
-  if(s<30){
-  for (let v of vectores) {
-      v.move();
-  }
-  }else{
-  for(vec of returnVectores){
-    vec.vuelta();
-  }
-  }
-
-    for (let p of puntitos) {
-      p.circMinutos();
   }
 
   textFont(font);
   textAlign(CENTER, CENTER);
-  textSize(92);
 
-  if (dia){
-    fill(0);  
-  } else{
-    fill(255);
+  textSize(48);
+  text(tiempoActual, centroX, centroY);
+
+  textSize(32);
+  text(seg, centroX + 85, centroY + 3);
+
+  // Vectores
+  if (s < 30) {
+    for (let v of vectores) {
+      v.move();
+    }
+  } else {
+    for (let vec of returnVectores) {
+      vec.vuelta();
+    }
   }
-  text("Concello de Lugo", 450, 580);
-  textSize(12);
-    text("TimeLugo by Mariaff", 950, 750);  
 
-  // Velocidad 
+  // Velocidad
   angle += 0.015;
+}
+function verPunto() {
+
+  let radioMinutos = 150;
+  let minutos = minute();
+
+  for (let i = 0; i <= minutos; i++) {
+
+    // este cófigo fue generado por+ IA
+    let angulo = map(
+      i,
+      0,
+      59,
+      -HALF_PI,
+      TWO_PI - HALF_PI
+    );
+
+    let x = centroX + cos(angulo) * radio;
+    let y = centroY + sin(angulo) * radio;
+
+
+    let tamano = 12;
+
+    // El minuto actual aparece progresivamente
+    if (i === minutos) {
+      tamano = map(second(), 0, 59, 0, 12);
+    }
+
+    fill(119, 184, 214);
+    noStroke();
+
+    circle(x, y, tamano);
+  }
 }
 class Vector {
 
@@ -175,17 +173,5 @@ class Vector {
     circle(this.posX, this.posY, this.d);
     this.posX -= 2;
   }
-
-  circMinutos(){
-    fill(119, 184, 214);  
-    noStroke();  strokeWeight(3);
-    noFill();
-    circle(this.posX, this.posY, this.d);
-  //line(this.posX, this.posY, 70, 100);
-//  line(this.posX, this.posY, 130, 100);
-  //arc(this.posX, 100, 60, 30, 0, PI);
-    this.posY++;
-  }
-
 
   }

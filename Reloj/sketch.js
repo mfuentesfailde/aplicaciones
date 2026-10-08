@@ -106,6 +106,14 @@ returnVectores.push(new Vector(940, 500, 25, 50));
       vec.vuelta();
     }
   }
+ //Mostrar titulo 
+  if (dia) {
+    fill(0);
+  } else {
+    fill(255);
+  }
+  textSize(14); 
+   text("Timeline by Maríaff", 520,550);
 
   // Velocidad
   angle += 0.015;

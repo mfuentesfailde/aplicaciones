@@ -24,11 +24,16 @@ let opacidad;
 let inicio;
 let textoCreado;
 let p2;
+let resultadoTxt;
+
 
 
 let intro;
 let buttom;
 
+let risa;
+//Tamano del la calabaza del resultado
+let calabazaSize = 80;
 
 function preload() {
     faceMesh = ml5.faceMesh({
@@ -42,7 +47,7 @@ async function setup() {
 
     anchoVideo = 640;
     altoVideo = 480;
-
+    document.getElementById("p5_loading").remove();
     createCanvas(840, 680);
 
     cepillo1 = await loadImage("assets/cepillo1.png");
@@ -53,7 +58,8 @@ async function setup() {
     calabazaVerde = await loadImage("assets/calabaza_verde.png");
 
     fontHal = await loadFont('assets/October.ttf');
-
+    risa = createAudio('assets/risa.wav');
+    risa.showControls();
 
     video = createCapture(VIDEO);
     video.size(anchoVideo, altoVideo);
@@ -69,34 +75,54 @@ async function setup() {
     textoCreado = false;
     cep1X = width / 2;
     cep2X = width / 2;
-    opacidad=0;
+    opacidad = 0;
 
 }
 
 function draw() {
 
     background(207, 193, 174);
-     // Hacer aparecer las telarañas poco a poco
+    // Hacer aparecer las telarañas poco a poco
     push()
     opacidad = min(opacidad + 1, 255);
     tint(255, opacidad);
     image(tela1, width - 150, height - 150, 150, 150);
     image(tela2, 10, height - 150, 150, 150);
     pop();
+
+    intro = createP('HealthSmile os desea');
+    intro.position(300, 60);
+    intro.id('texto_intro');
+    intro.hide();
     if (inicio) {
         animaCepillos();
         cep1X += velocidad;
         cep2X -= velocidad;
         if (cep2X < 10) {
-            intro = createP('HealthSmile os desea');
-            intro.position(300, 60);
-            intro.id('texto_intro');
+            intro.show();
             textFont(fontHal);
             textSize(48);
             text("Feliz Halloween", 300, 200);
             animaCalabaza();
         }
     } else {
+
+
+        push()
+        opacidad = min(opacidad + 1, 255);
+        tint(255, opacidad);
+        image(cepillo1, 20, 20, 80, 80);
+        image(cepillo2, 20, 20, 80, 80);
+        //image(calabaza, width/2, height-100, calabazaSize, calabazaSize);
+        pop();
+        intro.hide();
+
+        //  intro.html("HealthSmile");
+        // intro.position(200, 30);
+
+        resultadoTxt = createP();
+        resultadoTxt.position(width - 300, 30);
+        resultadoTxt.id('resultado');
 
 
         // Mostrar la cámara
@@ -123,12 +149,16 @@ function draw() {
                 );
 
                 if (apertura > 15) {
-                    fill(0);
-                    stroke(0);
-                    textSize(22);
-                    text("BOCA ABIERTA", 20, 60);
-                    console.log("boca");
-                }
+                    resultadoTxt.html("Muy bien");
+                    resultadoTxt.id('resultadoOK');
+                    image(calabazaVerde, width/2, height-100, calabazaSize, calabazaSize);
+                    risa.play();
+                } else {
+                        resultadoTxt.html("Abre la boca");
+                        resultadoTxt.id('resultado');
+                        image(calabaza, width/2, height-100, calabazaSize, calabazaSize);
+                        risa.stop();
+                    }
                 noFill();
                 stroke("#a86832");
                 strokeWeight(5);
@@ -149,27 +179,26 @@ function gotFaces(results) {
 }
 function detectarBoca() {
     inicio = false;
-      if (p2) {
+    if (p2) {
         p2.remove();
-        p2 = null;
+        p2 = undefined;
     }
-
-    if (intro) {
+   if (intro) {
         intro.remove();
-        intro = null;
+        intro = undefined;
     }
 
-    if (button) {
-        button.remove();
-        button = null;
+    if (buttom) {
+        buttom.remove();
+        buttom = undefined;
     }
 }
 function verBoton() {
 
-    let button = createButton('COMENZAR');
-    button.position(width / 2, 550);
-    button.id('buttom');
-    button.mousePressed(detectarBoca);
+    buttom = createButton('COMENZAR');
+    buttom.position(width / 2, 550);
+    buttom.id('buttom');
+    buttom.mousePressed(detectarBoca);
 
 }
 function animaCepillos() {
@@ -200,8 +229,8 @@ function verTexto() {
 
     p2.position(100, 350);
     p2.id('texto');
-  
-    if (!buttom) {
+
+    if (inicio) {
         verBoton();
     }
 

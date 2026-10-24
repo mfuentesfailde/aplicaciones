@@ -22,12 +22,11 @@ let velocidad = 4;
 let opacidad;
 
 let inicio;
+
+let titulo
 let textoCreado;
 let p2;
 let resultadoTxt;
-
-
-
 let intro;
 let buttom;
 
@@ -59,7 +58,7 @@ async function setup() {
 
     fontHal = await loadFont('assets/October.ttf');
     risa = createAudio('assets/risa.wav');
-    risa.showControls();
+
 
     video = createCapture(VIDEO);
     video.size(anchoVideo, altoVideo);
@@ -76,7 +75,22 @@ async function setup() {
     cep1X = width / 2;
     cep2X = width / 2;
     opacidad = 0;
+    resultadoTxt = createP("Abre la boca");
+    resultadoTxt.position(width - 300, 30);
+    resultadoTxt.id('resultado');
+    resultadoTxt.hide();
 
+
+    intro = createP('HealthSmile os desea');
+    intro.position(300, 60);
+    intro.id('texto_intro');
+    intro.hide();
+    
+
+    titulo = createP('HealthSmile');
+    titulo.position(100, 30);
+    titulo.id('texto_intro');
+    titulo.hide();
 }
 
 function draw() {
@@ -87,13 +101,9 @@ function draw() {
     opacidad = min(opacidad + 1, 255);
     tint(255, opacidad);
     image(tela1, width - 150, height - 150, 150, 150);
-    image(tela2, 10, height - 150, 150, 150);
+    image(tela2, 2, height - 150, 150, 150);
     pop();
 
-    intro = createP('HealthSmile os desea');
-    intro.position(300, 60);
-    intro.id('texto_intro');
-    intro.hide();
     if (inicio) {
         animaCepillos();
         cep1X += velocidad;
@@ -113,16 +123,13 @@ function draw() {
         tint(255, opacidad);
         image(cepillo1, 20, 20, 80, 80);
         image(cepillo2, 20, 20, 80, 80);
-        //image(calabaza, width/2, height-100, calabazaSize, calabazaSize);
+        titulo.show();
         pop();
-        intro.hide();
 
-        //  intro.html("HealthSmile");
-        // intro.position(200, 30);
 
-        resultadoTxt = createP();
-        resultadoTxt.position(width - 300, 30);
-        resultadoTxt.id('resultado');
+   //       intro.html("HealthSmile");
+ //        intro.position(200, 30);
+
 
 
         // Mostrar la cámara
@@ -136,6 +143,9 @@ function draw() {
         if (faces.length > 0) {
             let cara = faces[0];
 
+            resultadoTxt.show();
+            resultadoTxt.position(width - 300, 30);
+            resultadoTxt.id('resultado');
             // Comprobar que existen los keypoints
             if (cara.keypoints && cara.keypoints.length > 0) {
 
@@ -150,15 +160,13 @@ function draw() {
 
                 if (apertura > 15) {
                     resultadoTxt.html("Muy bien");
-                    resultadoTxt.id('resultadoOK');
-                    image(calabazaVerde, width/2, height-100, calabazaSize, calabazaSize);
+                    image(calabazaVerde, width / 2, height - 100, calabazaSize, calabazaSize);
                     risa.play();
                 } else {
-                        resultadoTxt.html("Abre la boca");
-                        resultadoTxt.id('resultado');
-                        image(calabaza, width/2, height-100, calabazaSize, calabazaSize);
-                        risa.stop();
-                    }
+                    resultadoTxt.html("Abre la boca")
+                    image(calabaza, width / 2, height - 100, calabazaSize, calabazaSize);
+                    risa.stop();
+                }
                 noFill();
                 stroke("#a86832");
                 strokeWeight(5);
@@ -183,7 +191,7 @@ function detectarBoca() {
         p2.remove();
         p2 = undefined;
     }
-   if (intro) {
+    if (intro) {
         intro.remove();
         intro = undefined;
     }

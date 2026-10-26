@@ -144,7 +144,7 @@ function draw() {
         animaCepillos();
         cep1X += velocidad;
         cep2X -= velocidad;
-        arañaY += velocidad/2;
+        arañaY += velocidad;
 
         if (cep2X < 10) {
             intro.show();
@@ -258,7 +258,7 @@ function verBoton() {
 function animaCepillos() {
     image(cepillo1, cep1X, 100, 150, 150);
     image(cepillo2, cep2X, 100, 150, 150);
-    image(araña, width/2-150, arañaY, 200, 200);
+    image(araña, width/2-60, arañaY, 150, 150);
 }
 function animaCalabaza() {
     x += velocidad;

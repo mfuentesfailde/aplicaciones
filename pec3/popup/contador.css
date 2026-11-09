@@ -4,36 +4,30 @@ body {
   height: 300px;
 }
 
-.hidden {
-  display: none;
-}
 
-button {
-  border: none;
-  width: 100%;
+
+#btn{
+
+  width: 35%;
   margin: 3% auto;
   padding: 4px;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 12px;
   cursor: pointer;
-  background-color: #e5f2f2;
+  color: #000;
+  background-color: gray;
+  border: 1px solid greenyellow;
 }
 
-button:hover {
-  background-color: #cff2f2;
+#btn:hover {
+  width: 35%;
+  margin: 3% auto;
+  padding: 4px;
+  text-align: center;
+  font-size: 12px;;
+  cursor: pointer;
+  color: #000;
+  background-color: white;
+  border: 1px solid red;
 }
 
-button[type="reset"] {
-  background-color: #fbfbc9;
-}
-
-button[type="reset"]:hover {
-  background-color: #eaea9d;
-}
-.material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
-}

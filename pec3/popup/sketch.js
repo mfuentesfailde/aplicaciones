@@ -1,15 +1,18 @@
 
 //Dedinir veriables
-let h,m,s;
+let h, m, s;
 let sol;
 let angle = 0;
 let luna;
 let dia;
-let opacidad=0;
+let opacidad = 0;
 let font;
 let centroX;
 let centroY;
 let radio;
+let btnStart;
+let btnEnd;
+let cuenta;
 
 async function setup() {
   // Cargar la imagen y esperar a que termine
@@ -20,9 +23,18 @@ async function setup() {
   createCanvas(300, 300);
 
   textAlign(CENTER, CENTER);
- 
-  imageMode(CENTER);
 
+  imageMode(CENTER);
+  btnStart = createButton('START');
+  btnStart.position(width / 2, 250);
+  btnStart.id('btn');
+  btnStart.mousePressed(empezar);
+
+  btnEnd = createButton('FINISH');
+  btnEnd.position(width / 2, 250);
+  btnEnd.id('btn');
+  btnEnd.mousePressed(acabar);
+cuenta = false;
 
 }
 function draw() {
@@ -31,6 +43,12 @@ function draw() {
   h = hour();
   m = minute();
   s = second();
+  cuenta = getItem("cuenta");
+if(!cuenta){
+  btnEnd.hide();
+}
+  
+
 
   // Hora para mostrar
   let tiempoActual = `${nf(h, 2)}:${nf(m, 2)}`;
@@ -41,7 +59,7 @@ function draw() {
   centroY = height / 2;
 
   // Movimiento de la imagen
- radio = 80;
+  radio = 80;
 
   let posX = centroX + cos(angle) * radio;
   let posY = centroY + sin(angle) * radio;
@@ -57,11 +75,11 @@ function draw() {
   if (dia) {
     background(255);
     tint(255, 255);
-    image(sol, posX, posY, 60,60);
+    image(sol, posX, posY, 60, 60);
   } else {
     background(128);
     tint(255, 255);
-    image(luna, posX, posY,60,60);
+    image(luna, posX, posY, 60, 60);
   }
 
   // AQUÍ dibujamos los círculos
@@ -117,4 +135,28 @@ function verPunto() {
     noStroke();
     circle(x, y, tamano);
   }
+}
+function empezar() {
+  btnStart.hide();
+  btnEnd.show();
+  cuenta = true;
+  storeItem("cuenta", cuenta);
+  storeItem("inicio", Date.now());
+}
+function acabar(){
+  btnStart.show();
+  btnEnd.hide();
+  cuenta = false;
+  storeItem("cuenta", cuenta);
+// Recuperar instante inicial
+let inicio = getItem("inicio");
+
+// Tiempo transcurrido en segundos
+let segundos = floor((Date.now() - inicio) / 1000);
+
+let horas = floor(segundos / 3600);
+let minutos = floor((segundos % 3600) / 60);
+let segundosRestantes = segundos % 60;
+console.log(horas +":"+minutos+":"+segundosRestantes)
+
 }
